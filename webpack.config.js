@@ -2,7 +2,7 @@ import path from 'path';
 
 export default {
 	// Fichier d'entrée :
-	entry: './src/main.js',
+	entry: './src/app.js',
 	// Fichier de sortie :
 	output: {
 		path: path.resolve(import.meta.dirname, './build'),
