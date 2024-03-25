@@ -26,14 +26,14 @@ const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
 io.on('connection', socket => {
-	console.log(`connecté au serveur avec l'id ${socket.id}`);
+	console.log(`Client ${socket.id} connecté`);
 
 	socket.on('message', message => {
-		console.log(`message reçu : ${message}`);
+		console.log(`Client ${socket.id} dit : ${message}`);
 	});
 
 	socket.on('disconnect', () => {
-		console.log(`déconnecté du serveur avec l'id ${socket.id}`);
+		console.log(`Client ${socket.id} déconnecté`);
 	});
 });
 
