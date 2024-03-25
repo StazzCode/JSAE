@@ -7,45 +7,41 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 describe('Player', () => {
 	it('should have a width and height of 64 pixels', () => {
 		const player = new Player(0, 0, 64, 64);
-		assert.deepStrictEqual(player.width, 64);
-		assert.deepStrictEqual(player.heigth, 64);
+		assert.deepStrictEqual(player.getWidth(), 64);
+		assert.deepStrictEqual(player.getHeight(), 64);
 	});
 
 	it('should be positioned at coordinates 0,0', () => {
 		const player = new Player(0, 0, 64, 64);
-		assert.deepStrictEqual(player.getX(), 0);
-		assert.deepStrictEqual(player.getY(), 0);
+		assert.equal(player.getX(), 0);
+		assert.equal(player.getY(), 0);
 	});
 
-	it('should move to the right', async () => {
+	it('should move to the right', () => {
 		const player = new Player(0, 0, 64, 64);
 		player.velocity.x = 1;
-		await sleep(2000);
-		player.update();
-		assertTrue(player.getX > 0);
+		player.move();
+		assert.equal(player.getX() > 0, true);
 	});
 
-	it('should move to the left', async () => {
+	it('should move to the left', () => {
 		const player = new Player(100, 0, 64, 64);
 		player.velocity.x = -1;
-		await sleep(2000);
 		player.update();
-		assertTrue(player.getX < 100);
+		assert.equal(player.getX() < 100, true);
 	});
 
-	it('should move upward', async () => {
+	it('should move upward', () => {
 		const player = new Player(0, 100, 64, 64);
 		player.velocity.y = -1;
-		await sleep(2000);
 		player.update();
-		assertTrue(player.getY < 100);
+		assert.equal(player.getY() < 100, true);
 	});
 
-	it('should move downward', async () => {
+	it('should move downward', () => {
 		const player = new Player(0, 0, 64, 64);
 		player.velocity.y = 1;
-		await sleep(2000);
 		player.update();
-		assertTrue(player.getY > 0);
+		assert.equal(player.getY() > 0, true);
 	});
 });
