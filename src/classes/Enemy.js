@@ -6,7 +6,7 @@ export default class Enemy extends BaseEntity{
         super(x,y,width,height,color);
         this.sprite = sprite;
 
-        const refreshRate = 50;
+        this.refreshRate = 50;
         this.incrementInterval = setInterval( () => {
             if(this.isMovingLeft) this.incrementLeft();
             if(this.isMovingRight) this.incrementRight();
@@ -18,7 +18,7 @@ export default class Enemy extends BaseEntity{
             if(!this.isMovingRight) this.decrementRight();
             if(!this.isMovingUp) this.decrementUp();
             if(!this.isMovingDown) this.decrementDown();
-        },refreshRate)
+        },this.refreshRate)
 
     }
 
@@ -125,4 +125,35 @@ export default class Enemy extends BaseEntity{
             this.velocity.y = 0;
         }
     }
+
+    /*
+    ---- Suivi d'un joueur ----
+    */
+
+    setFollowing(player){
+        this.followingInterval = setInterval( () => {
+            const playerX = player.position.x;
+            const playerY = player.position.y;
+            const enemyX = this.position.x;
+            const enemyY = this.position.y;
+
+            if(!this.isMovingLeft && playerX<enemyX) this.startMovingLeft();
+            if(this.isMovingLeft && playerX>=enemyX) this.stopMovingLeft();
+
+            if(!this.isMovingRight && playerX>enemyX) this.startMovingRight();
+            if(this.isMovingRight && playerX<=enemyX) this.stopMovingRight();
+
+            if(!this.isMovingUp && playerY>enemyY) this.startMovingUp();
+            if(this.isMovingUp && playerY<=enemyY) this.stopMovingUp();
+
+            if(!this.isMovingDown && playerY<enemyY) this.startMovingDown();
+            if(this.isMovingDown && playerY>=enemyY) this.stopMovingDown();
+
+        },this.refreshRate)
+    }
+
+    removeFollowing(){
+        this.followingInterval = null;
+    }
+
 }
