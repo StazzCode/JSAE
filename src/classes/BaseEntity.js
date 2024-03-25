@@ -1,4 +1,4 @@
-class BaseEntity {
+export default class BaseEntity {
     constructor(x, y, width, height, color) {
         this.position = { x, y };
         this.size = { width, height };
