@@ -2,23 +2,30 @@ import BaseEntity from './BaseEntity.js';
 
 export default class Enemy extends BaseEntity{
     
-    constructor(x, y, width, height, color, sprite) {
+    constructor(x, y, width, height, color, sprite, distance = false) {
         super(x,y,width,height,color);
         this.sprite = sprite;
+        this.distance = distance;
 
         this.refreshRate = 50;
+
         this.incrementInterval = setInterval( () => {
             if(this.isMovingLeft) this.incrementLeft();
             if(this.isMovingRight) this.incrementRight();
             if(this.isMovingUp) this.incrementUp();
             if(this.isMovingDown) this.incrementDown();
-        },refreshRate);
+        },this.refreshRate);
         this.decrementInterval = setInterval( () => {
             if(!this.isMovingLeft) this.decrementLeft();
             if(!this.isMovingRight) this.decrementRight();
             if(!this.isMovingUp) this.decrementUp();
             if(!this.isMovingDown) this.decrementDown();
-        },this.refreshRate)
+        },this.refreshRate);
+        
+        this.updatePositionInterval = setInterval( () => {
+            this.position.x += this.velocity.x;
+            this.position.y += this.velocity.y;
+        },this.refreshRate);
 
     }
 
@@ -132,7 +139,7 @@ export default class Enemy extends BaseEntity{
 
     setFollowing(player){
         this.followingInterval = setInterval( () => {
-            const playerX = player.position.x;
+            const playerX = this.distance ? player.position.x + 100 : player.position.x;
             const playerY = player.position.y;
             const enemyX = this.position.x;
             const enemyY = this.position.y;
