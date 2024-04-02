@@ -19,6 +19,28 @@
     --font-color-tertiary: #8c8c8c;
 }
 
+
+:root {
+    --background-color: #292C36;
+    --primary-color: #3A3E49;
+    --primary-color-active: #3A3E49A3;
+    --secondary-color: #2c2f3b;
+    --secondary-color-active: #1f2128;
+    --green-color: #4E9735;
+    --green-color-active: #3A7A26;
+    --orange-color: #CC913E;
+    --orange-color-active: #A87A2B;
+    --red-color: #C93B3B;
+    --red-color-active: #A82B2B;
+    --blue-color: #43c5d6;
+    --blue-color-active: #2998a7;
+    --purple-color: #495afc;
+    --purple-color-active: #2f3f9f;
+    --font-color: #fff;
+    --font-color-secondary: #b3b3b3;
+    --font-color-tertiary: #8c8c8c;
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -39,4 +61,62 @@ body {
 
 .mainButton:hover {
     background-color: var(--primary-color-active);
+}
+
+#games-list {
+    margin: 20px auto;
+    width: 80%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid var(--primary-color);
+    padding: 10px;
+}
+
+th {
+    background-color: var(--primary-color);
+    color: var(--font-color);
+}
+
+td {
+    background-color: var(--secondary-color);
+    color: var(--font-color-secondary);
+}
+
+td a {
+    color: var(--font-color);
+    text-decoration: none;
+}
+
+td a:hover {
+    color: var(--font-color-secondary);
+}
+
+tr:nth-child(even) {
+    background-color: var(--primary-color);
+}
+
+tr:nth-child(odd) {
+    background-color: var(--secondary-color);
+}
+
+tr:hover {
+    background-color: var(--primary-color-active);
+}
+
+tr:hover td {
+    color: var(--font-color);
+}
+
+tr:hover td a {
+    color: var(--font-color);
+}
+
+.todo {
+    display: none;
 }
