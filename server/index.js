@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import addWebpackMiddleware from './middlewares/addWebpackMiddleware.js';
 import logger from './middlewares/logger.js';
 import bodyParser from 'body-parser';
+import * as fs from 'fs';
 
 const app = express();
 
@@ -15,10 +16,18 @@ app.use(bodyParser.json());
 // Static files
 app.use(express.static('client/public'));
 
-// Routes
+app.get('/*', (req, res, next) => {
+	if (fs.existsSync(`./client/public${req.url}`)) {
+		return res.sendFile(`./client/public${req.url}`, { root: '.' });
+	} else if (fs.existsSync(`./client/public${req.url}.html`)) {
+		return res.sendFile(`./client/public${req.url}.html`, { root: '.' });
+	}
+	next();
+});
 
-app.get('/', (req, res) => {
-	res.sendFile('index.html', { root: './client/public/html' });
+// 404
+app.use((req, res) => {
+	res.status(404).send('404');
 });
 
 // Socket.io
