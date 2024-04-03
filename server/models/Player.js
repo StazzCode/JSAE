@@ -4,11 +4,12 @@ let allPlayers = [];
 let playerID = 0;
 
 export default class Player extends BaseEntity {
-	constructor(x, y, width, height) {
+	constructor(x, y, width, height, sprite, id) {
 		super(x, y, width, height);
-		this.id = playerID++;
 		this.name = '';
 		this.score = 0;
+		this.sprite = sprite;
+		this.id = id;
 	}
 
 	update() {
@@ -35,7 +36,12 @@ export default class Player extends BaseEntity {
 	getHeight() {
 		return this.size.height;
 	}
-}
 
-
+	getData(){
+		return {
+			position : this.position,
+			size : this.size,
+			sprite : this.sprite,
+		};
+	}
 }
