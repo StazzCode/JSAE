@@ -47,7 +47,7 @@ body {
     background-color: var(--background-color);
     color: var(--font-color);
     overflow: hidden;
-    background-image: url("/client/public/img/Backgrounds/DOOMEternal 02_04_2024 22_36_28.png");
+    background-image: url("/img/Backgrounds/DOOMEternal 02_04_2024 22_36_28.png");
     background-size: 100% 100%;
     background-attachment: fixed;
     background-repeat: no-repeat;

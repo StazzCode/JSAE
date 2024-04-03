@@ -5,22 +5,22 @@ import { io } from 'socket.io-client';
 const canvas = document.querySelector('.gameCanvas');
 const context = canvas.getContext('2d');
 
-document.addEventListener('keypress', event => {
-    switch (event.key) {
-        case "z":
+document.addEventListener('keydown', event => {
+	switch (event.key) {
+		case 'z':
 			socket.send('up');
-            break;
-        case "q":
+			break;
+		case 'q':
 			socket.send('left');
-            break;
-        case "s":
+			break;
+		case 's':
 			socket.send('down');
-            break;
-        case "d":
+			break;
+		case 'd':
 			socket.send('right');
-            break;
-    }
-})
+			break;
+	}
+});
 
 document.addEventListener('keyup',event => {
 	socket.send("stop");
@@ -58,7 +58,6 @@ socket.on('connect', () => {
 });
 
 const buttons = document.querySelectorAll('.mainButton');
-console.log(buttons);
 
 buttons.forEach(button => {
 	button.addEventListener('mouseover', event => {
