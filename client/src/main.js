@@ -34,3 +34,16 @@ function resampleCanvas() {
 
 const canvasResizeObserver = new ResizeObserver(() => resampleCanvas());
 canvasResizeObserver.observe(canvas);
+const buttons = document.querySelectorAll('.mainButton');
+console.log(buttons);
+
+buttons.forEach(button => {
+	button.addEventListener('mouseover', event => {
+		button.querySelector(`.base`).setAttribute('hidden', '');
+		button.querySelector(`.hover`).removeAttribute('hidden');
+	});
+	button.addEventListener('mouseout', event => {
+		button.querySelector(`.hover`).setAttribute('hidden', '');
+		button.querySelector(`.base`).removeAttribute('hidden');
+	});
+});
