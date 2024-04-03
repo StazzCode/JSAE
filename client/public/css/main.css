@@ -46,77 +46,21 @@ body {
     text-align: center;
     background-color: var(--background-color);
     color: var(--font-color);
+    overflow: hidden;
+    background-image: url("/client/public/img/Backgrounds/DOOMEternal 02_04_2024 22_36_28.png");
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.menuBody {
+    display: flex;
+    justify-content: center;
 }
 
 .mainButton {
-    display: block;
-    width: 200px;
-    margin: 20px auto;
-    padding: 10px;
-    background-color: var(--primary-color);
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.mainButton:hover {
-    background-color: var(--primary-color-active);
-}
-
-#games-list {
-    margin: 20px auto;
-    width: 80%;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid var(--primary-color);
-    padding: 10px;
-}
-
-th {
-    background-color: var(--primary-color);
-    color: var(--font-color);
-}
-
-td {
-    background-color: var(--secondary-color);
-    color: var(--font-color-secondary);
-}
-
-td a {
-    color: var(--font-color);
-    text-decoration: none;
-}
-
-td a:hover {
-    color: var(--font-color-secondary);
-}
-
-tr:nth-child(even) {
-    background-color: var(--primary-color);
-}
-
-tr:nth-child(odd) {
-    background-color: var(--secondary-color);
-}
-
-tr:hover {
-    background-color: var(--primary-color-active);
-}
-
-tr:hover td {
-    color: var(--font-color);
-}
-
-tr:hover td a {
-    color: var(--font-color);
-}
-
-.todo {
-    display: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
