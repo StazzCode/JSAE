@@ -431,7 +431,7 @@ const globalThisShim = (() => {
 
 /***/ "./node_modules/engine.io-client/build/esm/index.js":
 /*!**********************************************************!*\
-  !*** ./node_modules/engine.io-client/build/esm/index.js ***!
+  !*** ./node_modules/engine.io-client/build/esm/main.js ***!
   \**********************************************************/
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
@@ -448,7 +448,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _socket_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./socket.js */ "./node_modules/engine.io-client/build/esm/socket.js");
 /* harmony import */ var _transport_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./transport.js */ "./node_modules/engine.io-client/build/esm/transport.js");
-/* harmony import */ var _transports_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./transports/index.js */ "./node_modules/engine.io-client/build/esm/transports/index.js");
+/* harmony import */ var _transports_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./transports/main.js */ "./node_modules/engine.io-client/build/esm/transports/index.js");
 /* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util.js */ "./node_modules/engine.io-client/build/esm/util.js");
 /* harmony import */ var _contrib_parseuri_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./contrib/parseuri.js */ "./node_modules/engine.io-client/build/esm/contrib/parseuri.js");
 /* harmony import */ var _transports_websocket_constructor_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./transports/websocket-constructor.js */ "./node_modules/engine.io-client/build/esm/transports/websocket-constructor.browser.js");
@@ -474,7 +474,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Socket: function() { return /* binding */ Socket; }
 /* harmony export */ });
-/* harmony import */ var _transports_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./transports/index.js */ "./node_modules/engine.io-client/build/esm/transports/index.js");
+/* harmony import */ var _transports_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./transports/main.js */ "./node_modules/engine.io-client/build/esm/transports/index.js");
 /* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util.js */ "./node_modules/engine.io-client/build/esm/util.js");
 /* harmony import */ var _contrib_parseqs_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./contrib/parseqs.js */ "./node_modules/engine.io-client/build/esm/contrib/parseqs.js");
 /* harmony import */ var _contrib_parseuri_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./contrib/parseuri.js */ "./node_modules/engine.io-client/build/esm/contrib/parseuri.js");
@@ -1241,7 +1241,7 @@ class Transport extends _socket_io_component_emitter__WEBPACK_IMPORTED_MODULE_1_
 
 /***/ "./node_modules/engine.io-client/build/esm/transports/index.js":
 /*!*********************************************************************!*\
-  !*** ./node_modules/engine.io-client/build/esm/transports/index.js ***!
+  !*** ./node_modules/engine.io-client/build/esm/transports/main.js ***!
   \*********************************************************************/
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
@@ -2324,7 +2324,7 @@ function encodePacketToBinary(packet, callback) {
 
 /***/ "./node_modules/engine.io-parser/build/esm/index.js":
 /*!**********************************************************!*\
-  !*** ./node_modules/engine.io-parser/build/esm/index.js ***!
+  !*** ./node_modules/engine.io-parser/build/esm/main.js ***!
   \**********************************************************/
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
@@ -2585,7 +2585,7 @@ Backoff.prototype.setJitter = function (jitter) {
 
 /***/ "./node_modules/socket.io-client/build/esm/index.js":
 /*!**********************************************************!*\
-  !*** ./node_modules/socket.io-client/build/esm/index.js ***!
+  !*** ./node_modules/socket.io-client/build/esm/main.js ***!
   \**********************************************************/
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
@@ -4135,7 +4135,7 @@ function _reconstructPacket(data, buffers) {
 
 /***/ "./node_modules/socket.io-parser/build/esm/index.js":
 /*!**********************************************************!*\
-  !*** ./node_modules/socket.io-parser/build/esm/index.js ***!
+  !*** ./node_modules/socket.io-parser/build/esm/main.js ***!
   \**********************************************************/
 /***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
