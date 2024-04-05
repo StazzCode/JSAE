@@ -1,4 +1,5 @@
 let currentGames = [];
+import Game from '../models/Game';
 
 async function createNewGame(req, res) {
 	const { gameName, gameType, maxPlayers, maxRounds } = req.body;
