@@ -5,7 +5,7 @@ import addWebpackMiddleware from './middlewares/addWebpackMiddleware.js';
 import logger from './middlewares/logger.js';
 import bodyParser from 'body-parser';
 import * as fs from 'fs';
-import Game from './models/Game.js'
+import Game from './models/Game.js';
 import Player from './models/Player.js';
 
 const app = express();
@@ -40,26 +40,26 @@ io.on('connection', socket => {
 	console.log(`Client ${socket.id} connecté`);
 
 	const game = new Game();
-	const player = new Player(0,0,200,200, 'img/player.png' ,socket.id);
+	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
 	game.addPlayer(player);
 	socket.send(game.getAllPlayersData());
 
 	socket.on('message', message => {
 		console.log(`Client ${socket.id} dit : ${message}`);
 		switch (message) {
-			case "up":
+			case 'up':
 				player.startMovingUp();
 				break;
-			case "left":
+			case 'left':
 				player.startMovingLeft();
 				break;
-			case "right":
+			case 'right':
 				player.startMovingRight();
 				break;
-			case "down":
+			case 'down':
 				player.stopMovingDown();
 				break;
-			case "stop":
+			case 'stop':
 				player.stopMovingDown();
 				player.stopMovingUp();
 				player.stopMovingLeft();
@@ -80,4 +80,3 @@ const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
 	console.log(`Server started on http://localhost:${PORT}`);
 });
-
