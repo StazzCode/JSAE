@@ -126,7 +126,7 @@
 
 <div id="create-game">
 	<!-- need a name, max player, game, pulic / private + password	-->
-	<form action="/play" method="post">
+	<form>
 		<label for="name">Game Name:</label>
 		<input id="name" name="name" required type="text" />
 		<br />
@@ -134,8 +134,30 @@
 	</form>
 </div>
 
-<a class="mainButton" href="/find" id="findGame">Find Game</a>
 <a class="mainButton" href="/" id="back">Back</a>
 
 </body>
+
+<script>
+	const form = document.querySelector('form');
+	form.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const name = document.querySelector('#name').value;
+		fetch('/api/games', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ name }),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.success) {
+					window.location.href = `/play/${data.id}`;
+				} else {
+					alert(data.message);
+				}
+			});
+	});
+</script>
 </html>
