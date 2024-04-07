@@ -1,28 +1,30 @@
 let allGames = [];
-let gameId = 0;
+import { v4 as uuidv4 } from 'uuid';
 
 export default class Game {
 	constructor() {
-		this.id = gameId++;
+		this.id = uuidv4();
 		this.players = [];
+		this.maxPlayers = 4;
+		this.name = 'New Game';
+		this.owner = null;
+
 		allGames.push(this);
+		console.log('Created new game with id', this.id);
 	}
 
-	addPlayer(player){
-		this.players.push(player);
+	addPlayer(player, owner = false) {
+		if (Object.keys(this.players).length >= this.maxPlayers) {
+			return false;
+		}
+
+		this.players[player.id] = player;
+		if (owner) this.owner = player;
 	}
 
-	getAllPlayersData(){
-		const res = [];
-		this.players.forEach(player => {
-			res.push(player.getData());
-		})
-		return res;
-	}
-
-	findPlayer(id){
-		this.players.forEach(player => {
-			if(player.id === id) return player;
-		})
+	findPlayer(id) {
+		return this.players.find(player => player.id === id);
 	}
 }
+
+Game.allGames = allGames;
