@@ -7,40 +7,59 @@
 	<link href="img/logo.jpeg" rel="icon" type="image/jpeg" />
 	<title>Games</title>
 
-	<link href="css/main.css" rel="stylesheet" />
+	<!--	<link href="css/main.css" rel="stylesheet" />-->
 </head>
 <body>
 
-<div id="games-list">
+<div>
 	<table>
 		<thead>
 		<tr>
 			<th>Game Name</th>
+			<th>Owner</th>
 			<th>Players</th>
 			<th>Join</th>
 		</tr>
 		</thead>
-		<tbody>
-		<tr>
-			<td>First Game</td>
-			<td>1/2</td>
-			<td><a href="/play/1">Join</a></td>
-		</tr>
-		<tr>
-			<td>Second Game</td>
-			<td>1/4</td>
-			<td><a href="/play/2">Join</a></td>
-		</tr>
-		<tr>
-			<td>Third Game</td>
-			<td>1/8</td>
-			<td><a href="/play/3">Join</a></td>
-		</tr>
+		<tbody id="games">
 		</tbody>
 	</table>
 </div>
 
-<a class="mainButton" href="/" id="back">Back</a>
+<div>
+	<button id="refresh">Refresh</button>
+</div>
+
+<div>
+	<a class="mainButton" href="/" id="back">Back</a>
+</div>
 
 </body>
+<script>
+	const gamesList = document.getElementById('games');
+
+	function addGame(game) {
+		const tr = document.createElement('tr');
+		tr.innerHTML = `
+			<td>${game.name}</td>
+			<td>${game.owner.name}</td>
+			<td>${game.players.length}</td>
+			<td><a href="/play?game=${game.id}">Join</a></td>
+		`;
+		gamesList.appendChild(tr);
+	}
+
+	function refreshGames() {
+		fetch('/api/games')
+			.then(response => response.json())
+			.then(data => {
+				gamesList.innerHTML = '';
+				data.forEach(addGame);
+			});
+	}
+
+	refreshGames();
+
+	document.getElementById('refresh').addEventListener('click', refreshGames);
+</script>
 </html>
