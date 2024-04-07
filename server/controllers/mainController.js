@@ -1,17 +1,11 @@
-function login(req, res) {
+export async function login(req, res) {
 	res.status(501).send('Not Implemented');
 }
 
-function register(req, res) {
+export async function register(req, res) {
 	res.status(501).send('Not Implemented');
 }
 
-function logout(req, res) {
+export async function logout(req, res) {
 	res.status(501).send('Not Implemented');
 }
-
-module.exports = {
-	login,
-	register,
-	logout,
-};
