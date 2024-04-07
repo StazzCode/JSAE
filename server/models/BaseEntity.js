@@ -4,10 +4,10 @@ export default class BaseEntity {
 		this.size = { width, height };
 		this.velocity = { x: 0, y: 0 };
 		this.maxVelocity = 10;
-		this.acceleration = 0.5;
+		this.acceleration = 1;
 		this.friction = 0.9;
 
-		this.refreshRate = 50;
+		this.refreshRate = 20;
 		
         this.incrementInterval = setInterval( () => {
             if(this.isMovingLeft) this.incrementLeft();
@@ -23,8 +23,13 @@ export default class BaseEntity {
         },this.refreshRate);
         
         this.updatePositionInterval = setInterval( () => {
+            const oldPositionX = this.position.x;
+            const oldPositionY = this.position.y;
             this.position.x += this.velocity.x;
             this.position.y += this.velocity.y;
+            if(oldPositionX != this.position.x || oldPositionY != this.position.y){
+                this.movingFunction();
+            }
         },this.refreshRate);
 	}
 	
@@ -48,8 +53,6 @@ export default class BaseEntity {
     decrementLeft(){
         if(this.velocity.x < 0){
             this.velocity.x += this.friction;
-        }else{
-            this.velocity.x = 0;
         }
     }
 
@@ -73,8 +76,7 @@ export default class BaseEntity {
     decrementRight(){
         if(this.velocity.x > 0){
             this.velocity.x += -this.friction;
-        }else{
-            this.velocity.x = 0;
+            if(this.velocity.x < 0) this.velocity.x = 0;
         }
     }
 
@@ -91,15 +93,13 @@ export default class BaseEntity {
     }
 
     incrementUp(){
-        if(this.velocity.y < this.maxVelocity)
-            this.velocity.y += this.acceleration;
+        if(this.velocity.y > -this.maxVelocity)
+            this.velocity.y += -this.acceleration;
     }
 
     decrementUp(){
-        if(this.velocity.y > 0){
-            this.velocity.y += -this.friction;
-        }else{
-            this.velocity.y = 0;
+        if(this.velocity.y < 0){
+            this.velocity.y += this.friction;
         }
     }
 
@@ -116,15 +116,22 @@ export default class BaseEntity {
     }
 
     incrementDown(){
-        if(this.velocity.y > -this.maxVelocity)
-            this.velocity.y += -this.acceleration;
+        if(this.velocity.y < this.maxVelocity)
+            this.velocity.y += this.acceleration;
     }
 
     decrementDown(){
-        if(this.velocity.y < 0){
-            this.velocity.y += this.friction;
-        }else{
-            this.velocity.y = 0;
+        if(this.velocity.y > 0){
+            this.velocity.y += -this.friction;
+            if(this.velocity.y < 0) this.velocity.y = 0;
         }
+    }
+
+    /*
+     ---- DETECTION DEPLACEMENT ---- 
+    */
+
+    setOnMove(movingFunction){
+        this.movingFunction = movingFunction;
     }
 }

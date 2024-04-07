@@ -44,6 +44,10 @@ io.on('connection', socket => {
 	game.addPlayer(player);
 	socket.send(game.getAllPlayersData());
 
+	player.setOnMove( () => {
+		socket.send(game.getAllPlayersData());
+	})
+
 	socket.on('message', message => {
 		console.log(`Client ${socket.id} dit : ${message}`);
 		switch (message) {
@@ -57,7 +61,7 @@ io.on('connection', socket => {
 				player.startMovingRight();
 				break;
 			case 'down':
-				player.stopMovingDown();
+				player.startMovingDown();
 				break;
 			case 'stop':
 				player.stopMovingDown();
@@ -66,8 +70,7 @@ io.on('connection', socket => {
 				player.stopMovingRight();
 				break;
 		}
-		console.log(player.position);
-		socket.send(game.getAllPlayersData());
+		console.log(player.velocity);
 	});
 
 	socket.on('disconnect', () => {
