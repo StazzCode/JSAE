@@ -51,23 +51,29 @@ io.on('connection', socket => {
 	socket.on('message', message => {
 		console.log(`Client ${socket.id} dit : ${message}`);
 		switch (message) {
-			case 'up':
+			case 'startUp':
 				player.startMovingUp();
 				break;
-			case 'left':
+			case 'startLeft':
 				player.startMovingLeft();
 				break;
-			case 'right':
+			case 'startRight':
 				player.startMovingRight();
 				break;
-			case 'down':
+			case 'startDown':
 				player.startMovingDown();
 				break;
-			case 'stop':
-				player.stopMovingDown();
+			case 'stopUp':
 				player.stopMovingUp();
+				break;
+			case 'stopLeft':
 				player.stopMovingLeft();
+				break;
+			case 'stopRight':
 				player.stopMovingRight();
+				break;
+			case 'stopDown':
+				player.stopMovingDown();
 				break;
 		}
 		console.log(player.velocity);

@@ -8,22 +8,35 @@ const context = canvas.getContext('2d');
 document.addEventListener('keydown', event => {
 	switch (event.key) {
 		case 'z':
-			socket.send('up');
+			socket.send('startUp');
 			break;
 		case 'q':
-			socket.send('left');
+			socket.send('startLeft');
 			break;
 		case 's':
-			socket.send('down');
+			socket.send('startDown');
 			break;
 		case 'd':
-			socket.send('right');
+			socket.send('startRight');
 			break;
 	}
 });
 
 document.addEventListener('keyup',event => {
-	socket.send("stop");
+	switch (event.key) {
+		case 'z':
+			socket.send('stopUp');
+			break;
+		case 'q':
+			socket.send('stopLeft');
+			break;
+		case 's':
+			socket.send('stopDown');
+			break;
+		case 'd':
+			socket.send('stopRight');
+			break;
+	}
 })
 
 function resampleCanvas() {
