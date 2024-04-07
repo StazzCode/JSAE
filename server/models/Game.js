@@ -9,7 +9,12 @@ export default class Game {
 	}
 
 	addPlayer(player){
+		player.setOnMove(this.updateFunction);
 		this.players.push(player);
+	}
+
+	removePlayer(player){
+		this.players = this.players.filter( element => element.id != player.id);
 	}
 
 	getAllPlayersData(){
@@ -24,5 +29,9 @@ export default class Game {
 		this.players.forEach(player => {
 			if(player.id === id) return player;
 		})
+	}
+
+	setOnUpdate(updateFunction){
+		this.updateFunction = updateFunction;
 	}
 }

@@ -35,18 +35,18 @@ app.use((req, res) => {
 // Socket.io
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
+const game = new Game();
 
 io.on('connection', socket => {
 	console.log(`Client ${socket.id} connecté`);
 
-	const game = new Game();
+	game.setOnUpdate( () => {
+		socket.send(game.getAllPlayersData());
+	})
+
 	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
 	game.addPlayer(player);
 	socket.send(game.getAllPlayersData());
-
-	player.setOnMove( () => {
-		socket.send(game.getAllPlayersData());
-	})
 
 	socket.on('message', message => {
 		console.log(`Client ${socket.id} dit : ${message}`);
@@ -81,6 +81,7 @@ io.on('connection', socket => {
 
 	socket.on('disconnect', () => {
 		console.log(`Client ${socket.id} déconnecté`);
+		game.removePlayer(player);
 	});
 });
 

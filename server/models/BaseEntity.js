@@ -37,7 +37,7 @@ export default class BaseEntity {
      ---- DEPLACEMENT GAUCHE ---- 
     */
 
-	 startMovingLeft(){
+	startMovingLeft(){
         this.isMovingLeft = true;
     }
 
