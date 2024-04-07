@@ -1,23 +1,25 @@
-let currentGames = [];
-import Game from '../models/Game';
+import Game from '../models/Game.js';
+import Player from '../models/Player.js';
 
-async function createNewGame(req, res) {
-	const { gameName, gameType, maxPlayers, maxRounds } = req.body;
-	const newGame = await Game.create({
-		gameName,
-		gameType,
-		maxPlayers,
-		maxRounds,
-	}).fetch();
-	return res.json(newGame);
+export async function createNewGame(req, res) {
+	const { playerName } = req.body;
+
+	if (!playerName) {
+		return res.status(400).json({ error: 'Missing player name' });
+	}
+
+	const game = await new Game();
+	const player = await new Player(playerName);
+
+	game.addPlayer(player, true);
+
+	return res.json({
+		gameID: game.id,
+	});
 }
 
-async function findAllGames(req, res) {
-	const allGames = await Game.find();
-	return res.json(allGames);
+export async function findAllGames(req, res) {
+	return res.json({
+		games: Game.allGames,
+	});
 }
-
-module.exports = {
-	createNewGame,
-	findAllGames,
-};
