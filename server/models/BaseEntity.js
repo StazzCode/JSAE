@@ -3,11 +3,13 @@ export default class BaseEntity {
 		this.position = { x, y };
 		this.size = { width, height };
 		this.velocity = { x: 0, y: 0 };
-		this.maxVelocity = 10;
-		this.acceleration = 1;
+		this.maxVelocity = 15;
+		this.acceleration = 0.7;
 		this.friction = 0.9;
 
-		this.refreshRate = 20;
+		this.refreshRate = 10;
+
+        this.movingFunctions = [];
 		
         this.incrementInterval = setInterval( () => {
             if(this.isMovingLeft) this.incrementLeft();
@@ -22,13 +24,14 @@ export default class BaseEntity {
             if(!this.isMovingDown) this.decrementDown();
         },this.refreshRate);
         
+        
         this.updatePositionInterval = setInterval( () => {
             const oldPositionX = this.position.x;
             const oldPositionY = this.position.y;
             this.position.x += this.velocity.x;
             this.position.y += this.velocity.y;
             if(oldPositionX != this.position.x || oldPositionY != this.position.y){
-                this.movingFunction();
+                this.movingFunctions.forEach(fun => fun());
             }
         },this.refreshRate);
 	}
@@ -131,7 +134,7 @@ export default class BaseEntity {
      ---- DETECTION DEPLACEMENT ---- 
     */
 
-    setOnMove(movingFunction){
-        this.movingFunction = movingFunction;
+    addOnMove(movingFunction){
+        this.movingFunctions.push(movingFunction);
     }
 }

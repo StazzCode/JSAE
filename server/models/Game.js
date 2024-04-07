@@ -9,7 +9,6 @@ export default class Game {
 	}
 
 	addPlayer(player){
-		player.setOnMove(this.updateFunction);
 		this.players.push(player);
 	}
 
@@ -31,7 +30,7 @@ export default class Game {
 		})
 	}
 
-	setOnUpdate(updateFunction){
-		this.updateFunction = updateFunction;
+	addOnUpdate(updateFunction){
+		this.players.forEach(player => player.addOnMove(updateFunction))
 	}
 }

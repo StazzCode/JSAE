@@ -40,12 +40,13 @@ const game = new Game();
 io.on('connection', socket => {
 	console.log(`Client ${socket.id} connecté`);
 
-	game.setOnUpdate( () => {
-		socket.send(game.getAllPlayersData());
-	})
-
 	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
 	game.addPlayer(player);
+
+	game.addOnUpdate( () => {
+		socket.send(game.getAllPlayersData());
+	})
+	
 	socket.send(game.getAllPlayersData());
 
 	socket.on('message', message => {
