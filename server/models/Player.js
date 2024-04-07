@@ -36,12 +36,4 @@ export default class Player extends BaseEntity {
 	getHeight() {
 		return this.size.height;
 	}
-
-	getData(){
-		return {
-			position : this.position,
-			size : this.size,
-			sprite : this.sprite,
-		};
-	}
 }

@@ -18,7 +18,7 @@ export default class Enemy extends BaseEntity{
 
     setFollowing(player){
         this.followingInterval = setInterval( () => {
-            const playerX = this.distance ? player.position.x + 100 : player.position.x;
+            const playerX = this.distance ? player.position.x + 400 : player.position.x;
             const playerY = player.position.y;
             const enemyX = this.position.x;
             const enemyY = this.position.y;
@@ -29,12 +29,11 @@ export default class Enemy extends BaseEntity{
             if(!this.isMovingRight && playerX>enemyX) this.startMovingRight();
             if(this.isMovingRight && playerX<=enemyX) this.stopMovingRight();
 
-            if(!this.isMovingUp && playerY>enemyY) this.startMovingUp();
-            if(this.isMovingUp && playerY<=enemyY) this.stopMovingUp();
+            if(!this.isMovingUp && playerY<enemyY) this.startMovingUp();
+            if(this.isMovingUp && playerY>=enemyY) this.stopMovingUp();
 
-            if(!this.isMovingDown && playerY<enemyY) this.startMovingDown();
-            if(this.isMovingDown && playerY>=enemyY) this.stopMovingDown();
-
+            if(!this.isMovingDown && playerY>enemyY) this.startMovingDown();
+            if(this.isMovingDown && playerY<=enemyY) this.stopMovingDown();
         },this.refreshRate)
     }
 

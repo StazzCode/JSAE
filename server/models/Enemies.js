@@ -14,7 +14,7 @@ class Zombie extends Enemy{
 
 class Arachnotron extends Enemy{
     constructor(x,y){
-        super(x,y,200,200,'white',arachnotronSprite,true);
+        super(x,y,200,200,'white',zombieSprite,true);
     }
 }
 

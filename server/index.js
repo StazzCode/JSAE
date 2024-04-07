@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import * as fs from 'fs';
 import Game from './models/Game.js';
 import Player from './models/Player.js';
+import { Zombie, Arachnotron } from './models/Enemies.js';
 
 const app = express();
 
@@ -43,10 +44,14 @@ io.on('connection', socket => {
 	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
 	game.addPlayer(player);
 
+	const enemie = new Arachnotron(0,0);
+	game.addPlayer(enemie);
+	enemie.setFollowing(player);
+
 	game.addOnUpdate( () => {
 		socket.send(game.getAllPlayersData());
 	})
-	
+
 	socket.send(game.getAllPlayersData());
 
 	socket.on('message', message => {

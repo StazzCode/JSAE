@@ -137,4 +137,12 @@ export default class BaseEntity {
     addOnMove(movingFunction){
         this.movingFunctions.push(movingFunction);
     }
+
+    getData(){
+		return {
+			position : this.position,
+			size : this.size,
+			sprite : this.sprite,
+		};
+	}
 }
