@@ -6,7 +6,7 @@ let allPlayers = [];
 export default class Player extends BaseEntity {
 	constructor(name) {
 		super(0, 0, 200, 200, 'img/player.png');
-		this.name = '';
+		this.name = name;
 		this.score = 0;
 		this.sprite = 'img/player.png';
 		this.id = uuidv4();

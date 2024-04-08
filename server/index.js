@@ -5,6 +5,9 @@ import * as fs from 'fs';
 import mainRoutes from './routes/mainRoutes.js';
 import apiRoutes from './routes/apiRoutes.js';
 import bodyParser from 'body-parser';
+import gamesRoutes from './routes/gamesRoutes.js';
+import * as http from 'node:http';
+import { Server } from 'socket.io';
 
 const app = express();
 
@@ -27,60 +30,56 @@ app.get('/*', (req, res, next) => {
 
 app.use('/', mainRoutes);
 app.use('/api', apiRoutes);
+app.use('/games', gamesRoutes);
 
 // 404
 app.use((req, res) => {
 	res.status(404).send('404');
 });
 
-// Socket.io
-// const httpServer = http.createServer(app);
-// const io = new Server(httpServer);
-//
-// io.on('connection', socket => {
-// 	console.log(`Client ${socket.id} connecté`);
-//
-// 	const game = new Game();
-// 	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
-// 	game.addPlayer(player);
-// 	socket.send(game.getAllPlayersData());
-//
-// 	socket.on('message', message => {
-// 		console.log(`Client ${socket.id} dit : ${message}`);
-// 		switch (message) {
-// 			case 'up':
-// 				player.startMovingUp();
-// 				break;
-// 			case 'left':
-// 				player.startMovingLeft();
-// 				break;
-// 			case 'right':
-// 				player.startMovingRight();
-// 				break;
-// 			case 'down':
-// 				player.stopMovingDown();
-// 				break;
-// 			case 'stop':
-// 				player.stopMovingDown();
-// 				player.stopMovingUp();
-// 				player.stopMovingLeft();
-// 				player.stopMovingRight();
-// 				break;
-// 		}
-// 		console.log(player.position);
-// 		socket.send(game.getAllPlayersData());
-// 	});
-//
-// 	socket.on('disconnect', () => {
-// 		console.log(`Client ${socket.id} déconnecté`);
-// 	});
-// });
+const httpServer = http.createServer(app);
+const io = new Server(httpServer);
+
+io.on('connection', socket => {
+	console.log(`Client ${socket.id} connecté`);
+
+	// const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
+	// game.addPlayer(player);
+	// socket.send(game.getAllPlayersData());
+	//
+	// socket.on('message', message => {
+	// 	console.log(`Client ${socket.id} dit : ${message}`);
+	// 	switch (message) {
+	// 		case 'up':
+	// 			player.startMovingUp();
+	// 			break;
+	// 		case 'left':
+	// 			player.startMovingLeft();
+	// 			break;
+	// 		case 'right':
+	// 			player.startMovingRight();
+	// 			break;
+	// 		case 'down':
+	// 			player.stopMovingDown();
+	// 			break;
+	// 		case 'stop':
+	// 			player.stopMovingDown();
+	// 			player.stopMovingUp();
+	// 			player.stopMovingLeft();
+	// 			player.stopMovingRight();
+	// 			break;
+	// 	}
+	// 	console.log(player.position);
+	// 	socket.send(game.getAllPlayersData());
+	// });
+
+	socket.on('disconnect', () => {
+		console.log(`Client ${socket.id} déconnecté`);
+	});
+});
 
 // Start server
 const PORT = process.env.APP_PORT || 3000;
-// httpServer.listen(PORT, () => {
-// 	console.log(`Server started on http://localhost:${PORT}`);
-// });
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
 	console.log(`Server started on http://localhost:${PORT}`);
 });

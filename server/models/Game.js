@@ -4,10 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 export default class Game {
 	constructor() {
 		this.id = uuidv4();
-		this.players = [];
+		this.players = {};
 		this.maxPlayers = 4;
 		this.name = 'New Game';
-		this.owner = null;
+		this.element = {};
 
 		allGames.push(this);
 		console.log('Created new game with id', this.id);
@@ -15,16 +15,18 @@ export default class Game {
 
 	addPlayer(player, owner = false) {
 		if (Object.keys(this.players).length >= this.maxPlayers) {
+			console.log(
+				`Cannot add player ${player.id} to game ${this.id}, game is full`
+			);
 			return false;
 		}
 
 		this.players[player.id] = player;
-		if (owner) this.owner = player;
-	}
-
-	findPlayer(id) {
-		return this.players.find(player => player.id === id);
+		console.log(`Added player ${player.id} to game ${this.id}`);
 	}
 }
 
 Game.allGames = allGames;
+Game.findById = id => {
+	return allGames.find(game => game.id === id);
+};
