@@ -33,16 +33,26 @@
           max-width: 1000px;
       }
 
-      .back, .join {
+      .back {
           margin-top: 20px;
           text-decoration: none;
           color: #000;
           font-size: 18px;
       }
 
-      .back, .join {
+      .back {
           text-decoration: underline;
       }
+
+      .join > img {
+          width: 20px;
+          height: 20px;
+      }
+
+      .join > img:hover {
+          cursor: pointer;
+      }
+
 
       .row > div {
           padding-left: 10px;
@@ -83,7 +93,7 @@
 			<div class="col-2">Difficulty</div>
 			<div class="col-2">Players</div>
 			<div class="col-2">Time</div>
-			<div class="col-2">Join</div>
+			<div class="col-2">Connect</div>
 		</div>
 	</div>
 </div>
@@ -95,13 +105,10 @@
 	const serversList = document.querySelector('.serversContent');
 
 	function timeSinceStart(createAt) {
-		const time = new Date(createAt);
-		const now = new Date();
-		const diff = now - time;
-		const seconds = Math.floor(diff / 1000);
-		const minutes = Math.floor(seconds / 60);
-		const hours = Math.floor(minutes / 60);
-		return `${hours}h${minutes % 60}m${seconds % 60}s`;
+		const time = Math.floor((Date.now() - new Date(createAt)) / 1000);
+		const minutes = Math.floor(time / 60);
+		const seconds = time % 60;
+		return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 	}
 
 	function addServer(server) {
@@ -110,11 +117,15 @@
 		div.innerHTML = `
 			<div class="col-2">${server.name}</div>
 			<div class="col-2">${server.difficulty}</div>
-			<div class="col-2">${server.players.length} / ${server.maxPlayers}</div>
+			<div class="col-2">${Object.keys(server.players).length} / ${server.maxPlayers}</div>
 			<div class="col-2">${timeSinceStart(server.createdAt)}</div>
-			<div class="col-2"><a href="/games/${server.id}">Join</a></div>
+			<div class="col-2"><a href="/games/${server.id}" class="join"><img src="/img/plug-solid.svg" alt="Join" /></a></div>
 		`;
 		serversList.appendChild(div);
+
+		setInterval(() => {
+			div.children[3].innerText = timeSinceStart(server.createdAt);
+		}, 1000);
 	}
 
 	function refreshServers() {
@@ -126,8 +137,5 @@
 	}
 
 	refreshServers();
-
-	// get unix time and convert it to string
-
 </script>
 </html>
