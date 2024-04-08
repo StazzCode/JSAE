@@ -9,3 +9,7 @@ export async function register(req, res) {
 export async function logout(req, res) {
 	res.status(501).send('Not Implemented');
 }
+
+export async function getScores(req, res) {
+	return getScores();
+}

@@ -81,7 +81,7 @@
 	<div class="scoreBoardContent">
 		<div class="scoreBoard row">
 			<div class="col-2">Pseudo</div>
-			<div class="col-2">Difficulties</div>
+			<div class="col-2">Difficulty</div>
 			<div class="col-2">Kill Count</div>
 			<div class="col-2">Time</div>
 			<div class="col-2">Score</div>
@@ -93,28 +93,22 @@
 
 </body>
 <script>
-	const scoreList = [
-		{
-			pseudo: 'Linventif',
-			difficulties: 'Hard',
-			killCount: 32,
-			time: '00:10:00',
-			score: 100,
-		},
-	];
-
-	const scoreBoard = document.querySelector('.scoreBoardContent');
-	scoreList.forEach((score) => {
-		const scoreElement = document.createElement('div');
-		scoreElement.classList.add('scoreBoard', 'row');
-		scoreElement.innerHTML = `
-			<div class="col-2">${score.pseudo}</div>
-			<div class="col-2">${score.difficulties}</div>
-			<div class="col-2">${score.killCount}</div>
-			<div class="col-2">${score.time}</div>
-			<div class="col-2">${score.score}</div>
-		`;
-		scoreBoard.appendChild(scoreElement);
-	});
+	fetch('/api/scores')
+		.then((response) => response.json())
+		.then((data) => {
+			const scoreBoard = document.querySelector('.scoreBoardContent');
+			data.forEach((score) => {
+				const scoreElement = document.createElement('div');
+				scoreElement.classList.add('scoreBoard', 'row');
+				scoreElement.innerHTML = `
+					<div class="col-2">${score.pseudo}</div>
+					<div class="col-2">${score.difficulty}</div>
+					<div class="col-2">${score.kills}</div>
+					<div class="col-2">${score.time}</div>
+					<div class="col-2">${score.score}</div>
+				`;
+				scoreBoard.appendChild(scoreElement);
+			});
+		});
 </script>
 </html>
