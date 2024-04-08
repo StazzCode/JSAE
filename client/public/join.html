@@ -7,7 +7,7 @@
 	<link href="img/logo.jpeg" rel="icon" type="image/jpeg" />
 	<title>Games</title>
 
-	<!--	<link href="css/main.css" rel="stylesheet" />-->
+	<link href="css/main.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -17,7 +17,7 @@
 		<tr>
 			<th>Game Name</th>
 			<th>Owner</th>
-			<th>Players</th>
+			<th>NB Players</th>
 			<th>Join</th>
 		</tr>
 		</thead>
@@ -42,9 +42,8 @@
 		const tr = document.createElement('tr');
 		tr.innerHTML = `
 			<td>${game.name}</td>
-			<td>${game.owner.name}</td>
-			<td>${game.players.length}</td>
-			<td><a href="/play?game=${game.id}">Join</a></td>
+			<td>${Object.keys(game.players).length} / ${game.maxPlayers}</td>
+			<td><a href="/games/${game.id}">Join</a></td>
 		`;
 		gamesList.appendChild(tr);
 	}

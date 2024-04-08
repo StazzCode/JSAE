@@ -6,55 +6,13 @@
 
 	<link href="img/logo.jpeg" rel="icon" type="image/jpeg" />
 	<title>Games</title>
-
-	<!--	<link href="css/main.css" rel="stylesheet" />-->
-	<!--	<style>-->
-	<!--      #create-game {-->
-	<!--          display: flex;-->
-	<!--          flex-direction: column;-->
-	<!--          align-items: center;-->
-	<!--      }-->
-
-	<!--      #create-game form {-->
-	<!--          display: flex;-->
-	<!--          flex-direction: column;-->
-	<!--          align-items: center;-->
-	<!--          justify-content: center;-->
-	<!--      }-->
-
-	<!--      #create-game label {-->
-	<!--          margin-top: 1rem;-->
-	<!--      }-->
-
-	<!--      #create-game input, #create-game select {-->
-	<!--          margin-top: 0.5rem;-->
-	<!--          padding: 0.5rem;-->
-	<!--          border: none;-->
-	<!--          border-radius: 0.25rem;-->
-	<!--          background-color: var(&#45;&#45;secondary-color);-->
-	<!--          color: var(&#45;&#45;font-color);-->
-	<!--      }-->
-
-	<!--      #create-game button {-->
-	<!--          margin-top: 1rem;-->
-	<!--          padding: 0.5rem 1rem;-->
-	<!--          border: none;-->
-	<!--          border-radius: 0.25rem;-->
-	<!--          background-color: var(&#45;&#45;primary-color);-->
-	<!--          color: var(&#45;&#45;font-color);-->
-	<!--          cursor: pointer;-->
-	<!--      }-->
-
-	<!--      #create-game button:hover {-->games/undefined
-	<!--          background-color: var(&#45;&#45;primary-color-active);-->
-	<!--      }-->
-	<!--	</style>-->
+	<link href="css/main.css" rel="stylesheet" />
 </head>
 <body>
 
 <form id="create-game-form">
-	<label for="playerName">Pseudo:</label>
-	<input id="playerName" required type="text" />
+	<label for="gameName">Game Name</label>
+	<input id="gameName" required type="text" />
 
 	<button type="submit">Create Game</button>
 </form>
@@ -67,21 +25,21 @@
 	form.addEventListener('submit', async (event) => {
 		event.preventDefault();
 
-		const playerName = document.getElementById('playerName').value;
+		const gameName = document.getElementById('gameName').value;
 
 		const response = await fetch('/api/games', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ playerName }),
+			body: JSON.stringify({ gameName }),
 		});
 
 		const data = await response.json();
 		if (data.error) {
 			alert(data.error);
 		} else {
-			// window.location.href = `/games/${data.id}`;
+			window.location.href = `/games/${data.id}`;
 		}
 	});
 </script>
