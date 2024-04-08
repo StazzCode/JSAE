@@ -4,41 +4,154 @@
 	<meta charset="UTF-8" />
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-	<link href="img/logo.jpeg" rel="icon" type="image/jpeg" />
-	<title>Games</title>
-	<link href="css/main.css" rel="stylesheet" />
+	<link href="/img/logo.ico" rel="icon" type="image/jpeg" />
+	<title>New Game</title>
+
+	<style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f0f0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
+
+      .settings {
+          background-color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          width: 100%;
+          max-width: 800px;
+      }
+
+      .back {
+          margin-top: 20px;
+          text-decoration: none;
+          color: #000;
+          font-size: 18px;
+      }
+
+      .back:hover {
+          text-decoration: underline;
+
+      }
+
+      .settings h1 {
+          font-size: 24px;
+          margin-bottom: 20px;
+      }
+
+      .settingsContent {
+          margin-top: 20px;
+      }
+
+      .settingsElement {
+          margin-bottom: 20px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+      }
+
+      .settingsElement label {
+          font-size: 18px;
+          margin-right: 20px;
+          display: flex;
+          align-items: center;
+      }
+
+      .settingsElement input {
+          width: 80%;
+          border: 1px solid #f0f0f0;
+          border-radius: 5px;
+          font-size: 16px;
+          padding: 10px;
+      }
+
+      .settingsElement select {
+          width: 80%;
+          border: 1px solid #f0f0f0;
+          border-radius: 5px;
+          font-size: 16px;
+          padding: 10px;
+      }
+
+      .settingsElement select option {
+          font-size: 16px;
+      }
+
+      .validate {
+          display: flex;
+          justify-content: center;
+      }
+
+      .validate button {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          background-color: #f0f0f0;
+          cursor: pointer;
+          font-size: 16px;
+      }
+
+      .validate button:hover {
+          background-color: #e0e0e0;
+      }
+	</style>
 </head>
+
 <body>
-
-<form id="create-game-form">
-	<label for="gameName">Game Name</label>
-	<input id="gameName" required type="text" />
-
-	<button type="submit">Create Game</button>
+<form class="settings">
+	<h1>New Game</h1>
+	<div class="settingsContent">
+		<div class="settingsElement">
+			<label for="name">Game Name</label>
+			<input id="name" required type="text" value="New Game" />
+		</div>
+		<div class="settingsElement">
+			<label for="difficulty">Difficulty</label>
+			<select id="difficulty">
+				<option value="easy">Easy</option>
+				<option selected value="medium">Normal</option>
+				<option value="hard">Hard</option>
+			</select>
+		</div>
+	</div>
+	<div class="validate">
+		<button type="submit">Create Game</button>
+	</div>
 </form>
 
-<a class="primaryButton" href="/" id="back">Back</a>
+<a class="back" href="/">Back</a>
+
 </body>
 <script>
-	const form = document.getElementById('create-game-form');
+	const form = document.querySelector('.settings');
 
 	form.addEventListener('submit', async (event) => {
 		event.preventDefault();
 
-		const gameName = document.getElementById('gameName').value;
+		const name = document.getElementById('name').value;
+		const difficulty = document.getElementById('difficulty').value;
 
 		const response = await fetch('/api/games', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ gameName }),
+			body: JSON.stringify({ name, difficulty }),
 		});
 
 		const data = await response.json();
-		if (data.error) {
-			alert(data.error);
-		} else {
+		if (!data.error) {
 			window.location.href = `/games/${data.id}`;
 		}
 	});
