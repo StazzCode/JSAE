@@ -11,10 +11,10 @@ export async function createNewGame(req, res) {
 		maxPlayers < 1 ||
 		!allowedDifficulties.includes(difficulty)
 	) {
-		return res.status(400).json({ msg: 'Invalid request' });
+		return res.status(400).json({ error: 'Invalid request' });
 	}
 
-	const game = await new Game(name, difficulty, maxPlayers);
+	const game = await new Game(name, maxPlayers, difficulty);
 
 	return res.json(game);
 }

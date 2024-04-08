@@ -32,3 +32,7 @@ export default class Game {
 export function getAllGames() {
 	return allGames;
 }
+
+export function findGameById(id) {
+	return allGames.find(game => game.id === id);
+}
