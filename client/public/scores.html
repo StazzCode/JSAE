@@ -4,8 +4,8 @@
 	<meta charset="UTF-8" />
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-	<link href="/img/logo.jpeg" rel="icon" type="image/jpeg" />
-	<title>Scores Board</title>
+	<link href="/img/logo.ico" rel="icon" type="image/jpeg" />
+	<title>Scores</title>
 
 	<style>
       * {
@@ -77,12 +77,12 @@
 
 <body>
 <div class="scoreBoard">
-	<h1>Score Board</h1>
+	<h1>Scores</h1>
 	<div class="scoreBoardContent">
 		<div class="scoreBoard row">
 			<div class="col-2">Pseudo</div>
 			<div class="col-2">Difficulty</div>
-			<div class="col-2">Kill Count</div>
+			<div class="col-2">Date</div>
 			<div class="col-2">Time</div>
 			<div class="col-2">Score</div>
 		</div>
@@ -103,7 +103,7 @@
 				scoreElement.innerHTML = `
 					<div class="col-2">${score.pseudo}</div>
 					<div class="col-2">${score.difficulty}</div>
-					<div class="col-2">${score.kills}</div>
+					<div class="col-2">${score.date}</div>
 					<div class="col-2">${score.time}</div>
 					<div class="col-2">${score.score}</div>
 				`;

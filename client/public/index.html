@@ -4,29 +4,112 @@
 	<meta charset="UTF-8" />
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-	<link href="img/logo.jpeg" rel="icon" type="image/jpeg" />
-	<title>Games</title>
+	<link href="/img/logo.ico" rel="icon" type="image/jpeg" />
+	<title>Main Menu</title>
 
-	<link href="css/main.css" rel="stylesheet" />
-	<!--		<script defer src="/build/main.bundle.js"></script>-->
+	<style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f0f0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          height: 100vh;
+      }
+
+      h1 {
+          font-size: 48px;
+          margin-bottom: 160px;
+          margin-top: 160px;
+      }
+
+      .buttons {
+          margin-top: 20px;
+          text-decoration: none;
+          color: #000;
+          font-size: 26px;
+      }
+
+      .buttons:hover {
+          text-decoration: underline;
+
+      }
+	</style>
 </head>
+
 <body>
-
-<div class="menuBody">
-	<div class="centerColumn">
-		<div class="gameTitle">
-			<img alt="GameTitle" src="/img/Title/Title.gif">
-		</div>
-
-		<a class="mainButton" href="/play" id="play">
-			<img alt="Play" class="base" src="/img/Buttons/doom-bigupper-play.png">
-			<img alt="Play" class="hover" hidden src="/img/Buttons/doom-bigupper-play-2.png">
-		</a>
-		<a class="mainButton" href="/join" id="joinGame">
-			<img alt="Join Game" class="base" src="/img/Buttons/doom-bigupper-join-game.png">
-			<img alt="Join Game" class="hover" hidden src="/img/Buttons/doom-bigupper-join-game-2.png">
-		</a>
-	</div>
-</div>
+<h1>The Simple Game</h1>
 </body>
+<script>
+	const linksMenu = [
+		{
+			'name': 'Play',
+			'link': '/play',
+		},
+		{
+			'name': 'Join Game',
+			'link': '/join',
+		},
+		{
+			'name': 'Account',
+			'link': '/account',
+		},
+		{
+			'name': 'Scores',
+			'link': '/scores',
+		},
+		{
+			'name': 'Credits',
+			'link': '/credits',
+		},
+	];
+
+	const body = document.querySelector('body');
+	linksMenu.forEach(link => {
+		const button = document.createElement('a');
+		button.href = link.link;
+		button.innerText = link.name;
+		button.classList.add('buttons');
+		body.appendChild(button);
+	});
+</script>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--	<meta charset="UTF-8" />-->
+<!--	<meta content="width=device-width, initial-scale=1.0" name="viewport" />-->
+
+<!--	<link href="img/logo.jpeg" rel="icon" type="image/jpeg" />-->
+<!--	<title>Games</title>-->
+
+<!--	<link href="css/main.css" rel="stylesheet" />-->
+<!--	&lt;!&ndash;		<script defer src="/build/main.bundle.js"></script>&ndash;&gt;-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div class="menuBody">-->
+<!--	<div class="centerColumn">-->
+<!--		<div class="gameTitle">-->
+<!--			<img alt="GameTitle" src="/img/Title/Title.gif">-->
+<!--		</div>-->
+
+<!--		<a class="mainButton" href="/play" id="play">-->
+<!--			<img alt="Play" class="base" src="/img/Buttons/doom-bigupper-play.png">-->
+<!--			<img alt="Play" class="hover" hidden src="/img/Buttons/doom-bigupper-play-2.png">-->
+<!--		</a>-->
+<!--		<a class="mainButton" href="/join" id="joinGame">-->
+<!--			<img alt="Join Game" class="base" src="/img/Buttons/doom-bigupper-join-game.png">-->
+<!--			<img alt="Join Game" class="hover" hidden src="/img/Buttons/doom-bigupper-join-game-2.png">-->
+<!--		</a>-->
+<!--	</div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

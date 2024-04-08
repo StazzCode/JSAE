@@ -7,7 +7,10 @@ import bodyParser from 'body-parser';
 import * as fs from 'fs';
 import Game from './models/Game.js';
 import Player from './models/Player.js';
-import { Zombie, Arachnotron } from './models/Enemies.js';
+import { Arachnotron } from './models/Enemies.js';
+import mainRoutes from './routes/mainRoutes.js';
+import apiRoutes from './routes/apiRoutes.js';
+import gameRoutes from './routes/gamesRoutes.js';
 
 const app = express();
 
@@ -28,6 +31,10 @@ app.get('/*', (req, res, next) => {
 	next();
 });
 
+app.use('/', mainRoutes);
+app.use('/api', apiRoutes);
+app.use('/games', gameRoutes);
+
 // 404
 app.use((req, res) => {
 	res.status(404).send('404');
@@ -44,13 +51,13 @@ io.on('connection', socket => {
 	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
 	game.addPlayer(player);
 
-	const enemie = new Arachnotron(0,0);
+	const enemie = new Arachnotron(0, 0);
 	game.addPlayer(enemie);
 	enemie.setFollowing(player);
 
-	game.addOnUpdate( () => {
+	game.addOnUpdate(() => {
 		socket.send(game.getAllPlayersData());
-	})
+	});
 
 	socket.send(game.getAllPlayersData());
 

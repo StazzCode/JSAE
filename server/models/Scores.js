@@ -1,6 +1,6 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 
-export default class Map {
+export default class Scores {
 	constructor(player, game) {
 		this.playerName = player.name;
 		this.kills = game.players[player.id].kills;
@@ -15,8 +15,8 @@ export default class Map {
 		);
 	}
 
-	saveScore() {
-		const scores = JSON.parse(readFileSync('./server/data/scores.json'));
+	save() {
+		const scores = getScores();
 		scores.push({
 			playerName: this.playerName,
 			score: this.getScore(),
@@ -26,5 +26,16 @@ export default class Map {
 }
 
 export function getScores() {
-	return JSON.parse(readFileSync('./server/data/scores.json'));
+	if (!existsSync('./server/data/scores.json')) {
+		writeFileSync('./server/data/scores.json', '[]');
+		return [];
+	}
+
+	const rawData = readFileSync('./server/data/scores.json', 'utf8');
+	try {
+		return JSON.parse(rawData);
+	} catch (error) {
+		console.error('Error parsing JSON:', error);
+		return [];
+	}
 }

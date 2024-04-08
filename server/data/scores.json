@@ -1,0 +1,86 @@
+[
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Easy",
+    "score": 100,
+    "time": "00:00:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Medium",
+    "score": 100,
+    "time": "00:10:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Hard",
+    "score": 12500,
+    "time": "00:02:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Extreme",
+    "score": 1040,
+    "time": "00:5:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Impossible",
+    "score": 300,
+    "time": "00:07:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Custom",
+    "score": 1050,
+    "time": "00:09:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Easy",
+    "score": 100,
+    "time": "00:00:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Medium",
+    "score": 100,
+    "time": "00:00:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Hard",
+    "score": 100,
+    "time": "00:00:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Extreme",
+    "score": 100,
+    "time": "00:00:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Impossible",
+    "score": 100,
+    "time": "00:00:00",
+    "date": "2024-04-08"
+  },
+  {
+    "pseudo": "Linventif",
+    "difficulty": "Custom",
+    "score": 100,
+    "time": "00:00:00",
+    "date": "2024-04-08"
+  }
+]

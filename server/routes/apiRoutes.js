@@ -5,12 +5,12 @@ import {
 	findAllGames,
 } from '../controllers/gamesControllers.js';
 
-import { getScores } from '../controllers/mainController.js';
+import { getTopScores } from '../controllers/mainController.js';
 
 const router = express.Router();
 
 router.get('/games', findAllGames);
 router.post('/games', createNewGame);
-router.get('/scores', getScores);
+router.get('/scores', getTopScores);
 
 export default router;
