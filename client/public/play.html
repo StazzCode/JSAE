@@ -6,92 +6,41 @@
 
 	<link href="img/logo.jpeg" rel="icon" type="image/jpeg" />
 	<title>Games</title>
-
 	<link href="css/main.css" rel="stylesheet" />
-	<style>
-      #create-game {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-      }
-
-      #create-game form {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-      }
-
-      #create-game label {
-          margin-top: 1rem;
-      }
-
-      #create-game input, #create-game select {
-          margin-top: 0.5rem;
-          padding: 0.5rem;
-          border: none;
-          border-radius: 0.25rem;
-          background-color: var(--secondary-color);
-          color: var(--font-color);
-      }
-
-      #create-game button {
-          margin-top: 1rem;
-          padding: 0.5rem 1rem;
-          border: none;
-          border-radius: 0.25rem;
-          background-color: var(--primary-color);
-          color: var(--font-color);
-          cursor: pointer;
-      }
-
-      #create-game button:hover {
-          background-color: var(--primary-color-active);
-      }
-	</style>
 </head>
 <body>
 
-<div id="create-game">
-	<form>
-		<label for="name">Enter your name:</label>
-		<input id="name" required type="text" />
+<form id="create-game-form">
+	<label for="gameName">Game Name</label>
+	<input id="gameName" required type="text" />
 
-		<label for="name">Difficulty:</label>
-		<select id="difficulty" required>
-			<option value="easy">Easy</option>
-			<option value="medium">Medium</option>
-			<option value="hard">Hard</option>
-		</select>
-
-		<button type="submit">Create Game</button>
-	</form>
-</div>
+	<button type="submit">Create Game</button>
+</form>
 
 <a class="primaryButton" href="/" id="back">Back</a>
-
 </body>
-
 <script>
-	const form = document.querySelector('form');
-	form.addEventListener('submit', (e) => {
-		e.preventDefault();
-		const name = document.querySelector('#name').value;
-		fetch('/api/games', {
+	const form = document.getElementById('create-game-form');
+
+	form.addEventListener('submit', async (event) => {
+		event.preventDefault();
+
+		const gameName = document.getElementById('gameName').value;
+
+		const response = await fetch('/api/games', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ name }),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.success) {
-					window.location.href = `/play/${data.id}`;
-				} else {
-					alert(data.message);
-				}
-			});
+			body: JSON.stringify({ gameName }),
+		});
+
+		const data = await response.json();
+		if (data.error) {
+			alert(data.error);
+		} else {
+			window.location.href = `/games/${data.id}`;
+		}
 	});
 </script>
 </html>

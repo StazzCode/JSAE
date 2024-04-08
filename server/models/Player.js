@@ -1,15 +1,15 @@
 import BaseEntity from './BaseEntity.js';
+import { v4 as uuidv4 } from 'uuid';
 
 let allPlayers = [];
-let playerID = 0;
 
 export default class Player extends BaseEntity {
-	constructor(x, y, width, height, sprite, id) {
-		super(x, y, width, height);
-		this.name = '';
+	constructor(name) {
+		super(0, 0, 200, 200, 'img/player.png');
+		this.name = name;
 		this.score = 0;
-		this.sprite = sprite;
-		this.id = id;
+		this.sprite = 'img/player.png';
+		this.id = uuidv4();
 	}
 
 	update() {

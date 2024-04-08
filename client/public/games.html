@@ -1,23 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeux</title>
+	<meta charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <style>
-		canvas {
-			background-color: white;
-			border: 3px dashed #777;
+	<link href="/img/logo.jpeg" rel="icon" type="image/jpeg" />
+	<title>JSae Doom</title>
 
-			width: 100%;
-			height: 80lvh;
-		}
+	<style>
+      body {
+          margin: 0;
+          padding: 0;
+          background-color: #393939;
+      }
+
+      canvas {
+          position: absolute;
+          background-color: #393939;
+          border: 1px solid #000;
+          top: 0;
+          left: 0;
+          margin: auto;
+      }
 	</style>
-
-    <script src="./build/main.bundle.js" defer></script>
 </head>
+
 <body>
-    <canvas class="gameCanvas" width="600" height="400"></canvas>
+<canvas id="gameCanvas"></canvas>
 </body>
+
+<script>
+
+	// popum ask for a pseudo
+	import { io } from 'socket.io-client';
+
+	const pseudo = prompt('Enter your pseudo');
+
+
+	let player = {
+		x: 0,
+		y: 0,
+		health: 100,
+		armor: 0,
+		width: 50,
+		height: 50,
+		speed: 5,
+		src: '/img/Player/test.png',
+		fireRate: -1,
+		gunUpgrade: 1,
+	};
+
+	let element = [
+		{
+			type: 'enemy',
+			src: '/img/Enemies/test.png',
+			position: { x: 0, y: 0 },
+			width: 50,
+			height: 50,
+		},
+		{
+			type: 'player',
+			src: '/img/Player/test.png',
+			position: { x: 100, y: 100 },
+			width: 50,
+			height: 50,
+			name: 'player 1',
+			health: 100,
+			armor: 0,
+		},
+	];
+
+	const canvas = document.querySelector('#gameCanvas');
+	const ctx = canvas.getContext('2d');
+
+	canvas.width = 800;
+	canvas.height = 600;
+
+	function draw() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		element.forEach((el) => {
+			const img = new Image();
+			img.src = el.src;
+
+			ctx.save();
+			ctx.translate(el.position.x + el.width / 2, el.position.y + el.height / 2);
+			ctx.rotate(el.angle);
+			ctx.drawImage(img, -el.width / 2, -el.height / 2, el.width, el.height);
+			ctx.restore();
+
+			if (el.type === 'bullet') {
+				el.position.x += Math.cos(el.angle) * el.speed;
+				el.position.y += Math.sin(el.angle) * el.speed;
+				if (el.position.x < 0 || el.position.x > canvas.width || el.position.y < 0 || el.position.y > canvas.height) {
+					element = element.filter((e) => e !== el);
+				}
+			}
+
+			if (el.type === 'player') {
+				ctx.font = '12px Arial';
+				ctx.fillStyle = 'white';
+				ctx.fillText(el.name, el.position.x, el.position.y - 10);
+				// armor = blue bar
+				ctx.fillStyle = 'blue';
+				ctx.fillRect(el.position.x, el.position.y - 5, el.armor, 5);
+				// health = red bar
+				ctx.fillStyle = 'red';
+				ctx.fillRect(el.position.x, el.position.y - 10, el.health, 5);
+			}
+		});
+
+		const img = new Image();
+		img.src = player.src;
+		ctx.drawImage(img, player.x, player.y, player.width, player.height);
+
+		// armor = blue bar
+		ctx.fillStyle = 'blue';
+		ctx.fillRect(player.x, player.y - 5, player.armor, 5);
+		// health = red bar
+		ctx.fillStyle = 'red';
+		ctx.fillRect(player.x, player.y - 10, player.health, 5);
+	}
+
+	function update() {
+		if (keys['ArrowUp'] || keys['z']) {
+			if (player.y <= 0) {
+				player.y = 0;
+			}
+			player.y -= player.speed;
+		}
+
+		if (keys['ArrowDown'] || keys['s']) {
+			if (player.y >= canvas.height - player.height) {
+				player.y = canvas.height - player.height;
+			}
+			player.y += player.speed;
+		}
+
+		if (keys['ArrowLeft'] || keys['q']) {
+			if (player.x <= 0) {
+				player.x = 0;
+			}
+			player.x -= player.speed;
+		}
+
+		if (keys['ArrowRight'] || keys['d']) {
+			if (player.x >= canvas.width - player.width) {
+				player.x = canvas.width - player.width;
+			}
+			player.x += player.speed;
+		}
+	}
+
+	const keys = {};
+	window.addEventListener('keydown', (event) => {
+		keys[event.key] = true;
+	});
+	window.addEventListener('keyup', (event) => {
+		keys[event.key] = false;
+	});
+
+	// 	game loop
+	function gameLoop() {
+		update();
+		draw();
+		requestAnimationFrame(gameLoop);
+	}
+
+	// on click create bullet
+	function createNewBullet(angle) {
+		element.push({
+			type: 'bullet',
+			src: '/img/Bullets/test.png',
+			position: { x: player.x, y: player.y },
+			speed: 10,
+			angle: angle,
+			width: 50,
+			height: 50,
+		});
+	}
+
+	let mousePosition = { x: 0, y: 0 };
+	let isFiring = false;
+	canvas.addEventListener('mousemove', (event) => {
+		const rect = canvas.getBoundingClientRect();
+		mousePosition = {
+			x: event.clientX - rect.left,
+			y: event.clientY - rect.top,
+		};
+	});
+
+	canvas.addEventListener('mousedown', (event) => {
+		isFiring = true;
+	});
+
+	canvas.addEventListener('mouseup', (event) => {
+		isFiring = false;
+	});
+
+	canvas.addEventListener('contextmenu', (event) => {
+		event.preventDefault();
+	});
+
+	function fire() {
+		const angle = Math.atan2(mousePosition.y - player.y, mousePosition.x - player.x);
+		createNewBullet(angle);
+		for (let i = 1; i <= player.gunUpgrade; i++) {
+			createNewBullet(angle + i * 0.1);
+			createNewBullet(angle - i * 0.1);
+		}
+	}
+
+	setInterval(() => {
+		if (isFiring) {
+			fire();
+		}
+	}, 1000 / player.fireRate);
+
+	gameLoop();
+	// socket io
+	const socket = io('http://localhost:3000');
+
+</script>
+
 </html>
