@@ -5,7 +5,7 @@
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
 	<link href="/img/logo.jpeg" rel="icon" type="image/jpeg" />
-	<title>Credit</title>
+	<title>Scores Board</title>
 
 	<style>
       * {
@@ -24,7 +24,7 @@
           height: 100vh;
       }
 
-      .creditBoard {
+      .scoreBoard {
           background-color: #fff;
           border-radius: 5px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -49,43 +49,42 @@
           padding-left: 10px;
       }
 
-      .creditBoard h1 {
+      .scoreBoard h1 {
           font-size: 24px;
           margin-bottom: 20px;
       }
 
-      .creditBoardContent {
+      .scoreBoardContent {
           margin-top: 20px;
       }
 
-      .creditBoard.row {
+      .scoreBoard.row {
           display: flex;
           justify-content: space-between;
           padding: 10px 0;
           border-bottom: 1px solid #f0f0f0;
       }
 
-      .creditBoard.row:last-child {
+      .scoreBoard.row:last-child {
           border-bottom: none;
       }
 
-      .creditBoard .col-2 {
+      .scoreBoard .col-2 {
           flex: 1;
       }
 	</style>
 </head>
 
 <body>
-<div class="creditBoard">
-	<h1>Credits</h1>
-	<div class="creditBoardContent">
-		<div class="creditBoard row">
-			<div class="col-2">First Name</div>
-			<div class="col-2">Last Name</div>
-			<div class="col-2">Group</div>
+<div class="scoreBoard">
+	<h1>Score Board</h1>
+	<div class="scoreBoardContent">
+		<div class="scoreBoard row">
 			<div class="col-2">Pseudo</div>
-			<div class="col-2">Pref Game</div>
-			<div class="col-2">%</div>
+			<div class="col-2">Difficulties</div>
+			<div class="col-2">Kill Count</div>
+			<div class="col-2">Time</div>
+			<div class="col-2">Score</div>
 		</div>
 	</div>
 </div>
@@ -94,46 +93,28 @@
 
 </body>
 <script>
-	const devList = [
+	const scoreList = [
 		{
-			firstName: 'Grégoire',
-			lastName: 'Launay--Bécue',
-			group: 'I',
 			pseudo: 'Linventif',
-			prefGame: 'Garry\'s Mod',
-			note: 100,
-		},
-		{
-			firstName: 'Baptiste',
-			lastName: 'Collesson',
-			group: 'I',
-			pseudo: 'Bexet',
-			prefGame: 'Fallout New Vegas',
-			note: 100,
-		},
-		{
-			firstName: 'Kellian',
-			lastName: 'Mirey',
-			group: 'I',
-			pseudo: 'Stazz',
-			prefGame: 'Minecraft',
-			note: 100,
+			difficulties: 'Hard',
+			killCount: 32,
+			time: '00:10:00',
+			score: 100,
 		},
 	];
 
-	const creditBoard = document.querySelector('.creditBoardContent');
-	devList.forEach((dev) => {
-		const devElement = document.createElement('div');
-		devElement.classList.add('creditBoard', 'row');
-		devElement.innerHTML = `
-			<div class="col-2">${dev.firstName}</div>
-			<div class="col-2">${dev.lastName}</div>
-			<div class="col-2">${dev.group}</div>
-			<div class="col-2">${dev.pseudo}</div>
-			<div class="col-2">${dev.prefGame}</div>
-			<div class="col-2">${dev.note}</div>
+	const scoreBoard = document.querySelector('.scoreBoardContent');
+	scoreList.forEach((score) => {
+		const scoreElement = document.createElement('div');
+		scoreElement.classList.add('scoreBoard', 'row');
+		scoreElement.innerHTML = `
+			<div class="col-2">${score.pseudo}</div>
+			<div class="col-2">${score.difficulties}</div>
+			<div class="col-2">${score.killCount}</div>
+			<div class="col-2">${score.time}</div>
+			<div class="col-2">${score.score}</div>
 		`;
-		creditBoard.appendChild(devElement);
+		scoreBoard.appendChild(scoreElement);
 	});
 </script>
 </html>
