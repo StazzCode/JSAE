@@ -124,6 +124,10 @@
 				<option value="hard">Hard</option>
 			</select>
 		</div>
+		<div class="settingsElement">
+			<label for="maxPlayers">Max Players</label>
+			<input id="maxPlayers" required type="number" value="4" />
+		</div>
 	</div>
 	<div class="validate">
 		<button type="submit">Create Game</button>
@@ -141,13 +145,14 @@
 
 		const name = document.getElementById('name').value;
 		const difficulty = document.getElementById('difficulty').value;
+		const maxPlayers = document.getElementById('maxPlayers').value;
 
 		const response = await fetch('/api/games', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ name, difficulty }),
+			body: JSON.stringify({ name, difficulty, maxPlayers }),
 		});
 
 		const data = await response.json();

@@ -1,16 +1,15 @@
-import Player from './Player.js';
 import { v4 as uuidv4 } from 'uuid';
 
 let allGames = [];
 
 export default class Game {
-	constructor(name) {
+	constructor(name = 'New Game', maxPlayers = 4, difficulty = 'Normal') {
 		this.id = uuidv4();
 		this.players = {};
-		this.maxPlayers = 4;
+		this.maxPlayers = maxPlayers;
 		this.name = name;
 		this.element = {};
-		this.difficulty = 'Normal';
+		this.difficulty = difficulty;
 		this.createdAt = new Date();
 
 		allGames.push(this);
@@ -33,14 +32,3 @@ export default class Game {
 export function getAllGames() {
 	return allGames;
 }
-
-// test create game
-const game = new Game('Test Game');
-// create 3 players
-const player1 = new Player('Player 1');
-const player2 = new Player('Player 2');
-const player3 = new Player('Player 3');
-// add players to game
-game.addPlayer(player1);
-game.addPlayer(player2);
-game.addPlayer(player3);
