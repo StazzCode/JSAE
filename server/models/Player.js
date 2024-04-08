@@ -4,12 +4,23 @@ import { v4 as uuidv4 } from 'uuid';
 let allPlayers = [];
 
 export default class Player extends BaseEntity {
-	constructor(name) {
+	constructor(name, color, socketID) {
 		super(name);
 		this.name = name;
+		this.socketID = socketID;
+		this.x = 50;
+		this.y = 200;
+		this.width = 100;
+		this.height = 100;
+		this.color = color;
 		this.score = 0;
-		this.sprite = 'img/player.png';
+		this.sprite = '/img/Player/test.png';
 		this.id = uuidv4();
+		this.health = 100;
+		this.speed = 5;
+
+		allPlayers.push(this);
+		console.log('Created new player with id', this.id);
 	}
 
 	// update() {
@@ -36,4 +47,12 @@ export default class Player extends BaseEntity {
 	// getHeight() {
 	// 	return this.size.height;
 	// }
+}
+
+export function findPlayerById(id) {
+	return allPlayers.find(player => player.id === id);
+}
+
+export function findPlayerBySocketID(socketID) {
+	return allPlayers.find(player => player.socketID === socketID);
 }

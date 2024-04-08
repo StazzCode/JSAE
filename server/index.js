@@ -8,6 +8,8 @@ import * as fs from 'fs';
 import mainRoutes from './routes/mainRoutes.js';
 import apiRoutes from './routes/apiRoutes.js';
 import gameRoutes from './routes/gamesRoutes.js';
+import { findGameById, findGameByPlayerId } from './models/Game.js';
+import Player, { findPlayerBySocketID } from './models/Player.js';
 
 const app = express();
 
@@ -40,60 +42,79 @@ app.use((req, res) => {
 // Socket.io
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
-// const game = new Game();
 
-// io.on('connection', socket => {
-// 	console.log(`Client ${socket.id} connecté`);
-//
-// 	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
-// 	game.addPlayer(player);
-//
-// 	const enemie = new Arachnotron(0, 0);
-// 	game.addPlayer(enemie);
-// 	enemie.setFollowing(player);
-//
-// 	game.addOnUpdate(() => {
-// 		socket.send(game.getAllPlayersData());
-// 	});
-//
-// 	socket.send(game.getAllPlayersData());
-//
-// 	socket.on('message', message => {
-// 		console.log(`Client ${socket.id} dit : ${message}`);
-// 		switch (message) {
-// 			case 'startUp':
-// 				player.startMovingUp();
-// 				break;
-// 			case 'startLeft':
-// 				player.startMovingLeft();
-// 				break;
-// 			case 'startRight':
-// 				player.startMovingRight();
-// 				break;
-// 			case 'startDown':
-// 				player.startMovingDown();
-// 				break;
-// 			case 'stopUp':
-// 				player.stopMovingUp();
-// 				break;
-// 			case 'stopLeft':
-// 				player.stopMovingLeft();
-// 				break;
-// 			case 'stopRight':
-// 				player.stopMovingRight();
-// 				break;
-// 			case 'stopDown':
-// 				player.stopMovingDown();
-// 				break;
-// 		}
-// 		console.log(player.velocity);
-// 	});
-//
-// 	socket.on('disconnect', () => {
-// 		console.log(`Client ${socket.id} déconnecté`);
-// 		game.removePlayer(player);
-// 	});
-// });
+let socketList = {};
+
+io.on('connection', socket => {
+	console.log(`Client ${socket.id} has connected`);
+	socketList[socket.id] = socket;
+
+	socket.on('playerInfo', playerInfo => {
+		console.log('Player info received', playerInfo);
+		const game = findGameById(playerInfo.gameID);
+		if (!game) {
+			console.log('Game not found');
+			return;
+		}
+		socketList[socket.id].gameID = playerInfo.gameID;
+		const player = new Player(
+			playerInfo.pseudo || `Player ${Object.keys(game.players).length + 1}`,
+			playerInfo.color ||
+				`#${Math.floor(Math.random() * 16777215).toString(16)}`,
+			socket.id
+		);
+		game.addPlayer(player);
+	});
+
+	socket.on('playerMove', playerMove => {
+		console.log('Player move received', playerMove);
+		const player = findPlayerBySocketID(socket.id);
+		if (!player) {
+			console.log('Player not found');
+			return;
+		}
+		player.x = playerMove.x;
+		player.y = playerMove.y;
+	});
+
+	socket.on('playerFire', playerFire => {
+		console.log('Player fire received', playerFire);
+		const player = findPlayerBySocketID(socket.id);
+		if (!player) {
+			console.log('Player not found');
+			return;
+		}
+		player.fire = playerFire;
+	});
+
+	socket.on('disconnect', () => {
+		console.log(`Client ${socket.id} has disconnected`);
+		delete socketList[socket.id];
+		const player = findPlayerBySocketID(socket.id);
+		console.log(player);
+		if (!player) {
+			console.log('Player not found');
+			return;
+		}
+		const game = findGameByPlayerId(player.id);
+		console.log(game);
+		if (!game) {
+			console.log('Game not found');
+			return;
+		}
+		game.removePlayer(player);
+	});
+});
+
+let tick = 10;
+setInterval(() => {
+	for (const socketID in socketList) {
+		socketList[socketID].emit(
+			'games',
+			findGameById(socketList[socketID].gameID)
+		);
+	}
+}, 1000 / tick);
 
 // Start server
 const PORT = process.env.APP_PORT || 3000;
