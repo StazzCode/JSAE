@@ -5,9 +5,6 @@ import addWebpackMiddleware from './middlewares/addWebpackMiddleware.js';
 import logger from './middlewares/logger.js';
 import bodyParser from 'body-parser';
 import * as fs from 'fs';
-import Game from './models/Game.js';
-import Player from './models/Player.js';
-import { Arachnotron } from './models/Enemies.js';
 import mainRoutes from './routes/mainRoutes.js';
 import apiRoutes from './routes/apiRoutes.js';
 import gameRoutes from './routes/gamesRoutes.js';
@@ -43,60 +40,60 @@ app.use((req, res) => {
 // Socket.io
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
-const game = new Game();
+// const game = new Game();
 
-io.on('connection', socket => {
-	console.log(`Client ${socket.id} connecté`);
-
-	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
-	game.addPlayer(player);
-
-	const enemie = new Arachnotron(0, 0);
-	game.addPlayer(enemie);
-	enemie.setFollowing(player);
-
-	game.addOnUpdate(() => {
-		socket.send(game.getAllPlayersData());
-	});
-
-	socket.send(game.getAllPlayersData());
-
-	socket.on('message', message => {
-		console.log(`Client ${socket.id} dit : ${message}`);
-		switch (message) {
-			case 'startUp':
-				player.startMovingUp();
-				break;
-			case 'startLeft':
-				player.startMovingLeft();
-				break;
-			case 'startRight':
-				player.startMovingRight();
-				break;
-			case 'startDown':
-				player.startMovingDown();
-				break;
-			case 'stopUp':
-				player.stopMovingUp();
-				break;
-			case 'stopLeft':
-				player.stopMovingLeft();
-				break;
-			case 'stopRight':
-				player.stopMovingRight();
-				break;
-			case 'stopDown':
-				player.stopMovingDown();
-				break;
-		}
-		console.log(player.velocity);
-	});
-
-	socket.on('disconnect', () => {
-		console.log(`Client ${socket.id} déconnecté`);
-		game.removePlayer(player);
-	});
-});
+// io.on('connection', socket => {
+// 	console.log(`Client ${socket.id} connecté`);
+//
+// 	const player = new Player(0, 0, 200, 200, 'img/player.png', socket.id);
+// 	game.addPlayer(player);
+//
+// 	const enemie = new Arachnotron(0, 0);
+// 	game.addPlayer(enemie);
+// 	enemie.setFollowing(player);
+//
+// 	game.addOnUpdate(() => {
+// 		socket.send(game.getAllPlayersData());
+// 	});
+//
+// 	socket.send(game.getAllPlayersData());
+//
+// 	socket.on('message', message => {
+// 		console.log(`Client ${socket.id} dit : ${message}`);
+// 		switch (message) {
+// 			case 'startUp':
+// 				player.startMovingUp();
+// 				break;
+// 			case 'startLeft':
+// 				player.startMovingLeft();
+// 				break;
+// 			case 'startRight':
+// 				player.startMovingRight();
+// 				break;
+// 			case 'startDown':
+// 				player.startMovingDown();
+// 				break;
+// 			case 'stopUp':
+// 				player.stopMovingUp();
+// 				break;
+// 			case 'stopLeft':
+// 				player.stopMovingLeft();
+// 				break;
+// 			case 'stopRight':
+// 				player.stopMovingRight();
+// 				break;
+// 			case 'stopDown':
+// 				player.stopMovingDown();
+// 				break;
+// 		}
+// 		console.log(player.velocity);
+// 	});
+//
+// 	socket.on('disconnect', () => {
+// 		console.log(`Client ${socket.id} déconnecté`);
+// 		game.removePlayer(player);
+// 	});
+// });
 
 // Start server
 const PORT = process.env.APP_PORT || 3000;

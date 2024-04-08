@@ -1,4 +1,4 @@
-import Game from '../models/Game.js';
+import Game, { getAllGames } from '../models/Game.js';
 
 export async function createNewGame(req, res) {
 	const { gameName } = req.body;
@@ -13,5 +13,5 @@ export async function createNewGame(req, res) {
 }
 
 export async function findAllGames(req, res) {
-	return res.json(Game.allGames);
+	return res.json(getAllGames());
 }
